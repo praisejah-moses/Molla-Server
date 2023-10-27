@@ -25,4 +25,8 @@ export const dbVerifyUser = async (id) => {
     ).select('_id username');
   
     return user;
-  };
+}
+
+export const dbdeleteUser = async(email)=>{
+  await UserModel.deleteOne({ email })
+}

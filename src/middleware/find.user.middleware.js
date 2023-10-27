@@ -1,16 +1,17 @@
 import { dbFindUser } from "../services/db.service.js";
+import AppError from "../utils/app.error.utils.js";
+import { TryCatch } from "../utils/try-catch.utils.js";
 
-export default async function FindUser(req,res,next) {
-  const { id , email } = req.body
+const FindUser = TryCatch( async (req,_res,next)=>{
+    const { id , email } = req.body
 
-  //check for request body
-  if(!id && !email) return res.status(404).json({
-        status: 404,
-        message:'Details cannot be empty'
-    })
+    //check for request body
+    if(!id && !email) throw new AppError(404,'Details cannot be empty')
 
-  //continue to find user if request body
-  const user = await dbFindUser( id, email )
-  req.user = user
-  next() 
-}
+    //continue to find user if request body
+    const user = await dbFindUser( id, email )
+    req.user = user
+    next() 
+})
+
+export default FindUser
