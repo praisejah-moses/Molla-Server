@@ -1,4 +1,4 @@
-import { dbFindUser } from "../services/db.service.js";
+import { dbFindUser } from "../services/database.service.js";
 import AppError from "../utils/app.error.utils.js";
 import { TryCatch } from "../utils/try-catch.utils.js";
 

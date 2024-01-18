@@ -1,4 +1,4 @@
-import { dbCreateUser, dbdeleteUser } from "../../../services/db.service.js";
+import { dbCreateUser } from "../../../services/database.service.js";
 import AppError from "../../../utils/app.error.utils.js";
 import { Hash } from "../../../utils/encryption.util.js";
 import { SendEmail } from "../../../utils/mail.utils.js";
@@ -19,11 +19,11 @@ const CreateUser = TryCatch(async(req,res)=>{
       const token = await GenerateToken(userCreated._id)
       
       //send vericfication link
-      await SendEmail(userCreated.email,'','',token).catch((error) => {dbdeleteUser(email); throw new AppError(400,error.message) })
+    SendEmail(userCreated.email,'','',token).catch(console.log('failed to send user an email'))
 
       return res.status(201).json({
         status:201,
-        message: 'Signup succesfull, confirm your email to continue'
+        message: `Check ${userCreated.email} for a confirmation code`
       })
   }})
 
